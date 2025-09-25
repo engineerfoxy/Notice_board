@@ -14,7 +14,7 @@ ShowAllInTable::ShowAllInTable(QWidget *parent)
     ui->image->setPixmap(pix);
     ui->banner->setText("مقدمه دانشجویان گرامی را به دانشگاه آزاد گرامی میداریم");
     Animation = new QPropertyAnimation(ui->banner,"geometry");
-    Animation->setDuration(2000);
+    Animation->setDuration(5000);
     Animation->setStartValue(QRect(-this->width(),0,this->width(),60));
     Animation->setEndValue(QRect(this->width(), 0, this->width(), 60));
     Animation->setEasingCurve(QEasingCurve::Linear);
@@ -27,7 +27,7 @@ ShowAllInTable::~ShowAllInTable()
     delete ui;
 }
 
-void ShowAllInTable::runExcel(QString &fileformat)
+void ShowAllInTable::runExcel(const QString &fileformat)
 {
     QXlsx::Document doc(fileformat);
     if (!doc.load()) {

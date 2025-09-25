@@ -5,10 +5,12 @@ AboutMe::AboutMe(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AboutMe)
 {
-    setFixedSize(400,168);
+    setFixedSize(465,485);
     ui->setupUi(this);
     ui->GitLink->setOpenExternalLinks(true);
-    ui->GitLink->setText("<a href='https://github.com/JavadRahmani2003'>مشخصات دقیق توسعه دهنده برنامه</a>");
+    ui->GitLink->setText("<a href='https://github.com/furryfoxyofficial'> \
+    Developed by love, for user of app</a>");
+    ui->lbl_Image->setScaledContents(true);
 }
 
 AboutMe::~AboutMe()

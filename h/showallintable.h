@@ -8,7 +8,9 @@
 #include <QScrollBar>
 #include <QTimer>
 #include <QScreen>
+#include <QDebug>
 #include <QPropertyAnimation>
+#include <QPainter>
 
 #include <xlsxdocument.h>
 #include <xlsxcell.h>
@@ -24,11 +26,10 @@ class ShowAllInTable : public QMainWindow
 public:
     explicit ShowAllInTable(QWidget *parent = nullptr);
     ~ShowAllInTable();
-    void runExcel(QString &fileformat);
+    void runExcel(const QString &fileformat);
     void startAutoScroll();
     QPropertyAnimation *Animation;
     QPixmap pix;
-
 
 private slots:
     void autoScroll();

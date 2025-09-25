@@ -34,8 +34,9 @@ FORMS += \
     ui/presentationday.ui \
     ui/showallintable.ui
 
-LIBS += \
-    -lodbc32
+win32 {
+    LIBS += -lodbc32
+}
 
 RESOURCES += \
     Resources.qrc

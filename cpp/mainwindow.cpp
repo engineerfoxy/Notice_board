@@ -15,7 +15,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(appTime,&QTimer::timeout,this,&MainWindow::mainTimer);
     appTime->start(1000);
     ReadFromDatabase();
-    showMinimized();
+    showNormal();
+    AboutMe *abut_me = new AboutMe(this);
+    abut_me->show();
+    QTimer::singleShot(4000, abut_me, &AboutMe::close);
 }
 
 MainWindow::~MainWindow()
@@ -78,10 +81,11 @@ void MainWindow::mainTimer()
                 ShowAllInTable *show = new ShowAllInTable(this);
                 show->runExcel(data->FileAddress);
                 show->startAutoScroll();
-                show->showMaximized();
+                show->showFullScreen();
             }
         }
     }
+    qDebug() << now;
 }
 
 void MainWindow::ReadFromDatabase()
@@ -154,13 +158,13 @@ void MainWindow::on_SaveBtn_clicked()
 
 void MainWindow::on_AddAFile_clicked()
 {
-    // for (const auto& data : listOfItems)
-    // {
-    //     ShowAllInTable *show = new ShowAllInTable(this);
-    //     show->runExcel(data->FileAddress);
-    //     show->startAutoScroll();
-    //     show->showMaximized();
-    // }
+    for (const auto& data : listOfItems)
+    {
+        ShowAllInTable *show = new ShowAllInTable(this);
+        show->runExcel(data->FileAddress);
+        show->startAutoScroll();
+        show->showFullScreen();
+    }
     PresentationDay *present = new PresentationDay(this);
     connect(present,&PresentationDay::AddData,this,&MainWindow::on_adding_data);
     present->show();
@@ -172,4 +176,11 @@ void MainWindow::on_adding_data(const ListItems &listofitems)
     FormForExcelTable *form = new FormForExcelTable(this);
     form->setListData(listofitems.Id,listofitems.DayName,listofitems.Time,listofitems.EndTime,listofitems.FileAddress);
     ui->VerticalSpaceBox->addWidget(form);
+}
+
+void MainWindow::on_actiontest_window_triggered()
+{
+    ShowAllInTable *sh = new ShowAllInTable(this);
+    sh->runExcel("Book.xlsx");
+    sh->showFullScreen();
 }
