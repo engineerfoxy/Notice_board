@@ -169,19 +169,19 @@ void MainWindow::on_SaveBtn_clicked()
 
 void MainWindow::on_AddAFile_clicked()
 {
-    for (const auto& data : listOfItems)
-    {
-        ShowAllInTable *show = new ShowAllInTable(this);
-        show->runExcel(data->FileAddress);
-        QString file_path = data->FileAddress;
-        QFileInfo info(file_path);
-        show->startAutoScroll();
-        show->set_file_name_on_board(info.fileName());
-        show->showFullScreen();
-    }
-    // PresentationDay *present = new PresentationDay(this);
-    // connect(present,&PresentationDay::AddData,this,&MainWindow::on_adding_data);
-    // present->show();
+    // for (const auto& data : listOfItems)
+    // {
+    //     ShowAllInTable *show = new ShowAllInTable(this);
+    //     show->runExcel(data->FileAddress);
+    //     QString file_path = data->FileAddress;
+    //     QFileInfo info(file_path);
+    //     show->startAutoScroll();
+    //     show->set_file_name_on_board(info.fileName());
+    //     show->showFullScreen();
+    // }
+    PresentationDay *present = new PresentationDay(this);
+    connect(present,&PresentationDay::AddData,this,&MainWindow::on_adding_data);
+    present->show();
 }
 
 void MainWindow::on_adding_data(const ListItems &listofitems)
