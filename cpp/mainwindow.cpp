@@ -88,6 +88,8 @@ void MainWindow::mainTimer()
                 show->runExcel(data->FileAddress);
                 show->startAutoScroll();
                 show->showFullScreen();
+                QFileInfo info(data->FileAddress);
+                show->set_file_name_on_board(info.fileName());
                 int msecs = now.msecsTo(endTime);
                 if (msecs > 0)
                 {
@@ -175,8 +177,8 @@ void MainWindow::on_AddAFile_clicked()
     //     show->runExcel(data->FileAddress);
     //     QString file_path = data->FileAddress;
     //     QFileInfo info(file_path);
-    //     show->startAutoScroll();
     //     show->set_file_name_on_board(info.fileName());
+    //     show->startAutoScroll();
     //     show->showFullScreen();
     // }
     PresentationDay *present = new PresentationDay(this);
