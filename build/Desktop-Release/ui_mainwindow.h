@@ -32,7 +32,6 @@ class Ui_MainWindow
 public:
     QAction *AboutBtn;
     QAction *autoshutdownbtn;
-    QAction *actiontest_window;
     QWidget *centralwidget;
     QGridLayout *gridLayout;
     QHBoxLayout *buttonsArea;
@@ -46,7 +45,6 @@ public:
     QMenuBar *menuBar;
     QMenu *About;
     QMenu *menu;
-    QMenu *menutest;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -70,8 +68,6 @@ public:
         autoshutdownbtn = new QAction(MainWindow);
         autoshutdownbtn->setObjectName(QString::fromUtf8("autoshutdownbtn"));
         autoshutdownbtn->setCheckable(true);
-        actiontest_window = new QAction(MainWindow);
-        actiontest_window->setObjectName(QString::fromUtf8("actiontest_window"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         gridLayout = new QGridLayout(centralwidget);
@@ -107,7 +103,7 @@ public:
         ScrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 854, 503));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 854, 488));
         gridLayout_2 = new QGridLayout(scrollAreaWidgetContents);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         VerticalSpaceBox = new QVBoxLayout();
@@ -115,7 +111,7 @@ public:
 
         gridLayout_2->addLayout(VerticalSpaceBox, 0, 0, 1, 1);
 
-        verticalSplitor = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSplitor = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         gridLayout_2->addItem(verticalSplitor, 1, 0, 1, 1);
 
@@ -126,21 +122,17 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 874, 21));
+        menuBar->setGeometry(QRect(0, 0, 874, 37));
         About = new QMenu(menuBar);
         About->setObjectName(QString::fromUtf8("About"));
         menu = new QMenu(menuBar);
         menu->setObjectName(QString::fromUtf8("menu"));
-        menutest = new QMenu(menuBar);
-        menutest->setObjectName(QString::fromUtf8("menutest"));
         MainWindow->setMenuBar(menuBar);
 
         menuBar->addAction(menu->menuAction());
         menuBar->addAction(About->menuAction());
-        menuBar->addAction(menutest->menuAction());
         About->addAction(AboutBtn);
         menu->addAction(autoshutdownbtn);
-        menutest->addAction(actiontest_window);
 
         retranslateUi(MainWindow);
 
@@ -152,12 +144,10 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "\330\252\330\247\330\250\331\204\331\210 \330\247\330\271\331\204\330\247\331\206\330\247\330\252", nullptr));
         AboutBtn->setText(QApplication::translate("MainWindow", "\330\252\331\210\330\263\330\271\331\207 \330\257\331\207\331\206\330\257\331\207", nullptr));
         autoshutdownbtn->setText(QApplication::translate("MainWindow", "\331\201\330\271\330\247\331\204 \330\250\330\247\330\264\330\257", nullptr));
-        actiontest_window->setText(QApplication::translate("MainWindow", "test window", nullptr));
         SaveBtn->setText(QApplication::translate("MainWindow", "\330\260\330\256\333\214\330\261\331\207 \330\247\330\267\331\204\330\247\330\271\330\247\330\252", nullptr));
         AddAFile->setText(QApplication::translate("MainWindow", "+", nullptr));
         About->setTitle(QApplication::translate("MainWindow", "\330\257\330\261\330\250\330\247\330\261\331\207 ", nullptr));
         menu->setTitle(QApplication::translate("MainWindow", "\330\256\330\247\331\205\331\210\330\264\333\214 \330\256\331\210\330\257\332\251\330\247\330\261", nullptr));
-        menutest->setTitle(QApplication::translate("MainWindow", "test", nullptr));
     } // retranslateUi
 
 };

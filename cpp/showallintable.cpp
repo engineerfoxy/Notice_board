@@ -112,6 +112,11 @@ void ShowAllInTable::startAutoScroll()
     timer->start(5000);
 }
 
+void ShowAllInTable::set_file_name_on_board(const QString &filename)
+{
+    ui->FileName->setText(filename);
+}
+
 void ShowAllInTable::autoScroll()
 {
     auto bar = ui->ExcelTable->verticalScrollBar();

@@ -12,7 +12,6 @@
 #include <QDebug>
 
 #include "applicationitems.h"
-#include "showallintable.h"
 
 // Database
 #include <QtSql/QSqlDatabase>
@@ -47,7 +46,6 @@ private slots:
     void on_SaveBtn_clicked();
     void on_AddAFile_clicked();
     void on_adding_data(const ListItems &listofitems);
-    void on_actiontest_window_triggered();
 
 private:
     Ui::MainWindow *ui;

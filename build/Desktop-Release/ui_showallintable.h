@@ -16,6 +16,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QTableView>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -25,9 +26,11 @@ class Ui_ShowAllInTable
 public:
     QWidget *centralwidget;
     QGridLayout *gridLayout;
+    QVBoxLayout *verticalLayout;
+    QLabel *banner;
+    QLabel *FileName;
     QTableView *ExcelTable;
     QLabel *image;
-    QLabel *banner;
 
     void setupUi(QMainWindow *ShowAllInTable)
     {
@@ -39,31 +42,51 @@ public:
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         gridLayout = new QGridLayout(centralwidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setSizeConstraint(QLayout::SizeConstraint::SetDefaultConstraint);
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        banner = new QLabel(centralwidget);
+        banner->setObjectName(QString::fromUtf8("banner"));
+        QFont font;
+        font.setPointSize(22);
+        font.setBold(true);
+        banner->setFont(font);
+        banner->setStyleSheet(QString::fromUtf8("color: White;\n"
+"background:none;"));
+
+        verticalLayout->addWidget(banner);
+
+        FileName = new QLabel(centralwidget);
+        FileName->setObjectName(QString::fromUtf8("FileName"));
+        QFont font1;
+        font1.setPointSize(35);
+        font1.setBold(true);
+        font1.setItalic(true);
+        font1.setUnderline(true);
+        FileName->setFont(font1);
+        FileName->setAutoFillBackground(false);
+        FileName->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+        FileName->setAlignment(Qt::AlignmentFlag::AlignCenter);
+
+        verticalLayout->addWidget(FileName);
+
         ExcelTable = new QTableView(centralwidget);
         ExcelTable->setObjectName(QString::fromUtf8("ExcelTable"));
-        QFont font;
-        ExcelTable->setFont(font);
+        QFont font2;
+        ExcelTable->setFont(font2);
         ExcelTable->setStyleSheet(QString::fromUtf8("background: white;\n"
 "font-size: 24px;"));
 
-        gridLayout->addWidget(ExcelTable, 1, 1, 1, 1);
+        verticalLayout->addWidget(ExcelTable);
+
+
+        gridLayout->addLayout(verticalLayout, 1, 2, 1, 1);
 
         image = new QLabel(centralwidget);
         image->setObjectName(QString::fromUtf8("image"));
         image->setStyleSheet(QString::fromUtf8("background: none;"));
 
         gridLayout->addWidget(image, 1, 0, 1, 1);
-
-        banner = new QLabel(centralwidget);
-        banner->setObjectName(QString::fromUtf8("banner"));
-        QFont font1;
-        font1.setPointSize(22);
-        font1.setBold(true);
-        banner->setFont(font1);
-        banner->setStyleSheet(QString::fromUtf8("color: White;\n"
-"background:none;"));
-
-        gridLayout->addWidget(banner, 0, 0, 1, 2);
 
         ShowAllInTable->setCentralWidget(centralwidget);
 
@@ -75,8 +98,9 @@ public:
     void retranslateUi(QMainWindow *ShowAllInTable)
     {
         ShowAllInTable->setWindowTitle(QString());
-        image->setText(QApplication::translate("ShowAllInTable", "TextLabel", nullptr));
         banner->setText(QApplication::translate("ShowAllInTable", "TextLabel", nullptr));
+        FileName->setText(QApplication::translate("ShowAllInTable", "File Name", nullptr));
+        image->setText(QApplication::translate("ShowAllInTable", "TextLabel", nullptr));
     } // retranslateUi
 
 };

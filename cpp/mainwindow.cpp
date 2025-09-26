@@ -3,7 +3,11 @@
 #include "ui_mainwindow.h"
 #include "presentationday.h"
 #include "aboutme.h"
+
+#include "showallintable.h"
+
 #include <QLocale>
+#include <QFileInfo>
 #include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -66,7 +70,8 @@ void MainWindow::prepareDatabase()
         QMessageBox::critical(this,"خطا","عدم بازکردن دیتابیس");
         return;
     }
-    mydb.exec("CREATE TABLE IF NOT EXISTS infotable (id NUMERIC (4),dayname TEXT (10),time TEXT (8), endtime TEXT (8), fileaddress TEXT (5000));");
+    mydb.exec("CREATE TABLE IF NOT EXISTS infotable (id NUMERIC (4),dayname TEXT (10),time TEXT (8), \
+    endtime TEXT (8), fileaddress TEXT (5000));");
 }
 
 void MainWindow::mainTimer()
@@ -74,6 +79,7 @@ void MainWindow::mainTimer()
     QTime now = QTime::currentTime();
     for (const auto& data : listOfItems)
     {
+        QTime endTime = data->EndTime;
         if (ConvertToNativeDayName(GetDayName()) == data->DayName)
         {
             if (now.hour() == data->Time.hour() && now.minute() == data->Time.minute() && now.second() == data->Time.second())
@@ -82,6 +88,11 @@ void MainWindow::mainTimer()
                 show->runExcel(data->FileAddress);
                 show->startAutoScroll();
                 show->showFullScreen();
+                int msecs = now.msecsTo(endTime);
+                if (msecs > 0)
+                {
+                    QTimer::singleShot(msecs, show, &QWidget::close);
+                }
             }
         }
     }
@@ -162,12 +173,15 @@ void MainWindow::on_AddAFile_clicked()
     {
         ShowAllInTable *show = new ShowAllInTable(this);
         show->runExcel(data->FileAddress);
+        QString file_path = data->FileAddress;
+        QFileInfo info(file_path);
         show->startAutoScroll();
+        show->set_file_name_on_board(info.fileName());
         show->showFullScreen();
     }
-    PresentationDay *present = new PresentationDay(this);
-    connect(present,&PresentationDay::AddData,this,&MainWindow::on_adding_data);
-    present->show();
+    // PresentationDay *present = new PresentationDay(this);
+    // connect(present,&PresentationDay::AddData,this,&MainWindow::on_adding_data);
+    // present->show();
 }
 
 void MainWindow::on_adding_data(const ListItems &listofitems)
@@ -176,11 +190,4 @@ void MainWindow::on_adding_data(const ListItems &listofitems)
     FormForExcelTable *form = new FormForExcelTable(this);
     form->setListData(listofitems.Id,listofitems.DayName,listofitems.Time,listofitems.EndTime,listofitems.FileAddress);
     ui->VerticalSpaceBox->addWidget(form);
-}
-
-void MainWindow::on_actiontest_window_triggered()
-{
-    ShowAllInTable *sh = new ShowAllInTable(this);
-    sh->runExcel("Book.xlsx");
-    sh->showFullScreen();
 }

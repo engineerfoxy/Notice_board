@@ -28,6 +28,7 @@ public:
     ~ShowAllInTable();
     void runExcel(const QString &fileformat);
     void startAutoScroll();
+    void set_file_name_on_board(const QString &filename);
     QPropertyAnimation *Animation;
     QPixmap pix;
 

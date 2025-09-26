@@ -19,17 +19,19 @@ class FormForExcelTable : public QWidget
     Q_OBJECT
 
 public:
-    explicit FormForExcelTable(QWidget *parent = nullptr);
+    explicit FormForExcelTable(MainWindow *mwPtr, QWidget *parent = nullptr);
     ~FormForExcelTable();
     void setListData(int id, QString day, QTime time, QTime endtime, QString FileAddress);
-    void editFileRecords(int id);
-    void deleteFileRecords(int id);
+
+signals:
+    void itemsChanged();
 
 private slots:
     void on_DeleteBtn_clicked();
 
 private:
     Ui::FormForExcelTable *ui;
+    MainWindow *mainWindowPtr;
 };
 
 #endif // FORMFOREXCELTABLE_H

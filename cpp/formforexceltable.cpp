@@ -1,9 +1,10 @@
 #include "formforexceltable.h"
 #include "ui_formforexceltable.h"
 
-FormForExcelTable::FormForExcelTable(QWidget *parent)
+FormForExcelTable::FormForExcelTable(MainWindow *mwPtr, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::FormForExcelTable)
+    , mainWindowPtr(mwPtr)
 {
     ui->setupUi(this);
 }
@@ -15,27 +16,30 @@ FormForExcelTable::~FormForExcelTable()
 
 void FormForExcelTable::setListData(int id, QString day, QTime time, QTime endtime, QString FileAddress)
 {
-    ui->IdLbl->setText(QString("%1").arg(id));
-    ui->DayLbl->setText(QString("%1").arg(day));
-    ui->TimeLbl->setText(QString("%1").arg(time.toString()));
-    ui->EndTimeLbl->setText(QString("%1").arg(endtime.toString()));
-    ui->FileNameLbl->setText(QString("%1").arg(FileAddress));
+    ui->IdLbl->setText(QString::number(id));
+    ui->DayLbl->setText(day);
+    ui->TimeLbl->setText(time.toString());
+    ui->EndTimeLbl->setText(endtime.toString());
+    ui->FileNameLbl->setText(FileAddress);
 }
 
 
 void FormForExcelTable::on_DeleteBtn_clicked()
 {
-    QMessageBox::information(this,"info","این گزینه فعلا کار نمیکنه، از برنامه جانبی برای حذف در دیتابیس استفاده کنید.");
-    // MainWindow window;
-    // for (auto it = window.listOfItems.begin();it != window.listOfItems.end();++it)
-    // {
-    //     int id = (*it)->Id;
-    //     window.mydb.exec(&"DELETE FROM infotable WHERE id = "[id]);
-    //     // if (window.mydb.exec())
-    //     // {
-    //     //     QMessageBox::critical(this,"خطا","نمیتوان شناسه را دیتابیس پیدا کرد");
-    //     //     return;
-    //     // }
-    //     it = window.listOfItems.erase(it);
-    // }
+    auto &items = mainWindowPtr->listOfItems;
+    for (auto it = items.begin(); it != items.end(); )
+    {
+        int id = (*it)->Id;
+
+        QString queryStr = QString("DELETE FROM infotable WHERE id = %1").arg(id);
+        QSqlQuery query(mainWindowPtr->mydb);
+
+        if (!query.exec(queryStr)) {
+            QMessageBox::critical(this, "خطا", "نمیتوان شناسه را در دیتابیس پیدا کرد");
+            return;
+        }
+
+        it = items.erase(it); // erase returns the next valid iterator
+    }
+    emit itemsChanged();
 }
